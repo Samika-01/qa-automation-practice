@@ -12,4 +12,12 @@ test.describe('Login Validation Tests', () =>{
         
     })
 
+    test('Verify Login with empty fields', async({page}) => {
+        const loginPage = new LoginPage(page);
+        await page.goto('https://practice.expandtesting.com/login');
+        await loginPage.login('', '');
+        //await page.pause();
+        await expect(page.getByText('Your username is invalid')).toBeVisible();
+    })
+
 });
