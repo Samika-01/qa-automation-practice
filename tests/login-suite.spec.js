@@ -1,5 +1,6 @@
 const {test, expect} = require('@playwright/test');
 const LoginPage = require('../pages/LoginPage');
+const loginData = require('../test-data/loginData');
 
 test.describe('Login Tests', () =>{
 
@@ -16,16 +17,24 @@ test.describe('Login Tests', () =>{
         // const loginPage = new LoginPage(page);
         // await page.goto('https://practice.expandtesting.com/login');
         
-        await loginPage.login('practice', 'SuperSecretPassword!');
+        //await loginPage.login('practice', 'SuperSecretPassword!');
+        await loginPage.login(
+            loginData.validLogin.username,
+            loginData.validLogin.password
+        )
         //await page.pause();
-        await expect(page.getByRole('heading', {name:'Hi, practice!'})).toBeVisible();
+        await expect(page.getByText('Hi, practice!')).toBeVisible();
     });
 
     // TOC-002 Invalid password
     test('Verify Login unsuccessfull', async  ({page})=> {
         //const loginPage = new LoginPage(page);
         // await page.goto('https://practice.expandtesting.com/login');
-        await loginPage.login('practice', 'supersecret');
+        //await loginPage.login('practice', 'supersecret');
+        await loginPage.login(
+            loginData.invalidPassword.username,
+            loginData.invalidPassword.password
+        );
         //await page.pause();
         await expect(page.getByText('Your password is invalid')).toBeVisible();
         
@@ -35,7 +44,11 @@ test.describe('Login Tests', () =>{
     test('Verify Login with empty fields', async({page}) => {
         //const loginPage = new LoginPage(page);
         // await page.goto('https://practice.expandtesting.com/login');
-        await loginPage.login('', '');
+        //await loginPage.login('', '');
+        await loginPage.login(
+            loginData.emptyFields.username,
+            loginData.emptyFields.password
+        );
         //await page.pause();
         await expect(page.getByText('Your username is invalid')).toBeVisible();
     });

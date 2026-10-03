@@ -4,7 +4,7 @@ class LoginPage{
         this.page = page;
 
         this.usernameInput = page.getByLabel('Username');
-        this.passwordInput = page.getByLabel('Password');
+        this.passwordInput = page.getByRole('textbox', {name:'Password'});
         this.loginButton = page.getByRole('button', {name:'Login'});
         
 
